@@ -1,12 +1,92 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+
+  <!-- Bootstrap core CSS -->
+
+  <!-- Materialize CSS -->
+
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+
+  <!-- Custom styles for this template -->
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>{% block title %}Welcome!{% endblock %}</title>
+
+
+  {% endblock %}
+</head>
+
+
+<body style={margin-right:50px; margin-left:50px;}>
+  <!-- Navigation -->
+  <nav class="grey darken-4">
+  <div class="nav-wrapper">
+  <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="#">home</a></li>
+        <li><a href="#">about</a></li>
+        <li><a href="{{ path('home') }}">voir les figures</a></li>
+         <li><a href="#">Contact</a></li>
+
+         {% if not app.user  %}
+         <li><a href="{{ path('app_login') }}">connection</a></li>
+
+         {% else %}
+
+         <li><a href="{{ path('app_logout') }}">deconnexion</a></li>
+
+           {% endif %}
+      </ul>
+        
+      </div>
+   
+  </nav>
+
+  {% block flash_messages %}
+  {% for message in app.flashes('notice') %}
+  <div class="flash-notice">
+    {{ message }}
+  </div>
+  {% endfor %}
+
+  {% endblock %}
+
+
+
+  {% block body %}
+
+  
+  <!-- Page Content -->
+  
+
+  {% endblock %}
+
+
+
+  <footer class="py-5 bg-dark">
+    {% block footer %}
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
+      {% endblock %}
+    </div>
+
+    {% block javascripts %}
+    <!-- Bootstrap core JavaScript -->
+    {% endblock %}
+</body>
+
 </html>

@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+<h1> bienvenue </h1>
+
+<section class="figures">
+<h1>Liste des figures</h1>
+    {% for figure in figures %}
+        <h2>{{ figure.nom }}</h2>
+        <h2>{{ figure.description }}</h2>
+        <h2>{{ figure.GroupeFigure }}</h2>
+        <h2>{{ figure.lienPhoto }}</h2>
+        <h2>{{ figure.lienVideo }}</h2>
+
+
+    {% endfor %}
+
+    </section>
+{% endblock %}

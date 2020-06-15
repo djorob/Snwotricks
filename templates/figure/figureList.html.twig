@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1> Listes des figures </h1>
+
+
+
+
+<section class="figure">
+<div class="row">
+   
+        {% for figure in figures %}
+         <div class="col s5 m4">
+  <div class="card">
+    <div class="card-image waves-effect waves-block waves-light">
+    
+        <img class="activator" src="./assets/images/{{ figure.LienPhoto }}"  alt="photo de la figure">
+              
+
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">{{ figure.nom }}<i class="material-icons right"></i></span>
+      <p>{{ figure.GroupeFigure }}</p>
+      <p>{{ figure.description }}</p>
+      
+       
+    </div>
+    <div class="card-action">
+          <a href="{{path('figure_delete', {'id':figure.id}) }}"><span class="material-icons">
+delete
+</span></a>
+          <a href="{{path('figure_edit', {'id':figure.id}) }}"><span class="material-icons">
+create
+</span></a>
+        </div>
+    <div class="card-reveal">
+      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+      
+      <p>{{ figure.lienVideo }}</p>
+    </div>
+  </div>
+  </div>
+       
+
+        {% endfor %}
+        </div>
+
+</section>
+
+
+{% endblock %}
