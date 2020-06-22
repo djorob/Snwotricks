@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<h1> Listes des figures </h1>
+<h1 class="d-flex justify-content-end"> Listes des figures </h1>
 
 
 
@@ -15,7 +15,7 @@
   <div class="card">
     <div class="card-image waves-effect waves-block waves-light">
     
-        <img class="activator" src="./assets/images/{{ figure.LienPhoto }}"  alt="photo de la figure">
+        <img class="activator" src="./assets/images/{{ figure.LienPhoto }}"  alt="photo de la figure" width=150px height=150px >
               
 
     </div>
@@ -24,29 +24,31 @@
       <p>{{ figure.GroupeFigure }}</p>
       <p>{{ figure.description }}</p>
       
-       
-    </div>
-    <div class="card-action">
-          <a href="{{path('figure_delete', {'id':figure.id}) }}"><span class="material-icons">
-delete
-</span></a>
-          <a href="{{path('figure_edit', {'id':figure.id}) }}"><span class="material-icons">
-create
-</span></a>
-        </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-      
-      <p>{{ figure.lienVideo }}</p>
-    </div>
-  </div>
-  </div>
-       
+       </div>
+       <div class="card-action">
+         <a href="{{path('figure_delete', {'id':figure.id}) }}"><span class="material-icons">
+             delete
+           </span></a>
+         <a href="{{path('figure_edit', {'id':figure.id}) }}"><span class="material-icons">
+             create
+           </span></a>
+         <a href="{{path('figure_show', {'id':figure.id}) }}"><span class="material-icons">
+             visibility
+           </span></a>
+       </div>
+       <div class="card-reveal">
+         <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
 
-        {% endfor %}
-        </div>
-
-</section>
+         <p>{{ figure.lienVideo }}</p>
+       </div>
+       </div>
+       </div>
 
 
-{% endblock %}
+       {% endfor %}
+       </div>
+
+       </section>
+
+
+       {% endblock %}

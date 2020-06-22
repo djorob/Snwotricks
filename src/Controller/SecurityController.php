@@ -11,6 +11,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+
+
 
 class SecurityController extends AbstractController
 {
@@ -18,7 +22,15 @@ class SecurityController extends AbstractController
      /**
      * @Route("/inscription", name="security_registration")
      */
-    public function registration(Request $request, UserPasswordEncoderInterface $encoder) {
+    public function registration(Request $request, UserPasswordEncoderInterface $encoder, SluggerInterface $slugger) {
+        if ($this->getUser()){
+            
+            $this->addFlash(
+                'notice',
+                'vous devez vous deconnecter pour register'
+            );
+            return $this->redirectToRoute('figure_list');
+         }
         $user = new User();
         
         // on creer le formulaire et on relie les champs a l'entity User
@@ -28,10 +40,33 @@ class SecurityController extends AbstractController
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-             dump($user);
+
+            $photofile = $form->get('file')->getData();
+            if ($photofile) {
+                $originalFilename = pathinfo($photofile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photofile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $photofile->move(
+                        $this->getParameter('photo_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                
+                $LienPhoto =  $newFilename;
+                
+            }
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
-            
+            $user->setlienPhoto($LienPhoto);
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($user);
             $manager->flush();

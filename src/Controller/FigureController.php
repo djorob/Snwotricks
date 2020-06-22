@@ -22,6 +22,11 @@ use Symfony\Component\BrowserKit\Request as BrowserKitRequest;
 use Doctrine\Common\Annotations\DocLexer;
 use Doctrine\Persistence\ObjectManager as PersistenceObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
+
+
 
 
 class FigureController extends AbstractController
@@ -70,7 +75,7 @@ class FigureController extends AbstractController
     /**
      * @Route("/figure/new", name="figure_create")
      */
-    public function figure( Request $request){
+    public function figure( Request $request, SluggerInterface $slugger){
         //if (!$figure) {
         
             //$figure = new Figure();
@@ -94,13 +99,38 @@ class FigureController extends AbstractController
             if (!$this->getUser()){
                return $this->redirectToRoute('app_login');
             }
+            //dd($request->files->get('file'));
+            $photofile = $form->get('file')->getData();
+            if ($photofile) {
+                $originalFilename = pathinfo($photofile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$photofile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $photofile->move(
+                        $this->getParameter('photo_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                
+                $LienPhoto =  $newFilename;
+                
+            }
+            
+            
             $data = $form->getData();
             $nom = $form->get('Nom')->getData();
             //$description = $form->get('Description')->getData();
             $groupeFigure = $form->get('GroupeFigure')->getData();
-            $LienPhoto = $form->get('lienPhoto')->getData();
             $LienVideo = $form->get('lienVideo')->getData();
-            dump ($nom);
+            
             $figure = new Figure();
             $figure->setNom($nom);
             $figure->setDescription('description');
@@ -112,7 +142,7 @@ class FigureController extends AbstractController
             
 
             // on ajoute a la BDD
-
+            
             $em = $this->getDoctrine()->getManager();
             $em->persist($figure);
             $em->flush();
@@ -212,7 +242,8 @@ class FigureController extends AbstractController
 
          $repo = $this->getDoctrine()->getRepository(Forum::class);
 
-        $forum = $repo->findBy((['figureId' => $id ]));
+        $forum = $repo->findBy(['figureId' => $id ], ['createdAt'=> 'DESC'])->getRes;
+
 
         
         //voici le formulaire pour ajouter des new commetnaires

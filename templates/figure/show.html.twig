@@ -32,19 +32,44 @@
 {% for forum in comment %}
     <div class="Forum">
       <div class="row">
-        <div class="col-3">
+      
 
-          {{forum.getUser().getNom()}} (<small> {{forum.createdAt | date('d/m/Y à H.i')}} </small>)
+       
+        <div class="col-3">
+         <div class="row">
+         <div class="col-3">
+           <img class="activator" src="/assets/images/{{forum.getUser().getlienPhoto()}}"  alt="photo de la figure" width=80px height=80px >
+            </div>
+                    
+          
         </div>
+         </div>
+        
         <div class="col">
 
+          {{forum.getUser().getNom()}} (<small> {{forum.createdAt | date('d/m/Y à H.i')}} </small>)
 
           {{forum.content | raw}}
 
         </div>
       </div>
+       
 
   {% endfor %}
+
+  <div> <a href="{{path('forum', {'id':4}) }}"><span class="material-icons">
+      first_page
+    </span></a>
+
+    <div> <a href="{{path('forum', {'id':4}) }}"><span class="material-icons">
+        last_page
+      </span></a>
+      </div>
+  </div>
+ <span class="material-icons">
+             visibility
+           </span></a>
+
 
 
   <!--ici on affichera le formulaire pour creer un commetnaires-->

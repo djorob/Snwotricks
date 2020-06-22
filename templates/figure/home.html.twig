@@ -5,10 +5,10 @@
 
 <section class="figures">
     <div class="row">
-       
+       <div class="container col-lg-8">
         {% for figure in figures %}
-        <div class="col s5 m4">
-            <div class="card">
+        
+            <div class="card ">
                 <div class="card-image waves-effect waves-block waves-light">
 
                     <img class="activator" src="./assets/images/{{ figure.lienPhoto }}" alt="photo de la figure">
@@ -28,11 +28,12 @@
                         <p>{{ figure.lienVideo }}</p>
                     </div>
                 </div>
-            </div>
+            
 
 
             {% endfor %}
         </div>
+           </div>
 
 
 

@@ -45,7 +45,6 @@ class Figure
 
     /**
     * @ORM\Column(type="text")
-    * @Assert\Url
     */
     public $LienPhoto;
 

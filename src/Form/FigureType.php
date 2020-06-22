@@ -42,10 +42,13 @@ class FigureType extends AbstractType
                     'placeholder' => 'lien de votre vidéo'
                 )
            ))
-            ->add('lienPhoto' , FileType::class,array(
+            ->add('file' , FileType::class,array(
                 'label' => 'Upload photo ',
+                'mapped' => false,
                 'attr' => array(
-                    'placeholder' => 'uploader votre photo'
+                    'placeholder' => 'uploader votre photo',
+                    'required'=> 'false',
+                   
                 )
                 
 
@@ -54,6 +57,7 @@ class FigureType extends AbstractType
             //->add('user')
             ->setMethod('post')
             ->setAction('new')
+           // -> 'enctype'=> 'multipart/form-data'
             ->add('save', SubmitType::class)
         ;
     }
