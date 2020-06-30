@@ -25,6 +25,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\File;
+use Knp\Component\Pager\PaginatorInterface;
 
 
 
@@ -220,7 +221,7 @@ class FigureController extends AbstractController
      * @Route("/show/{id}", name="figure_show")
      */
 
-    public function show($id, Request $request){
+    public function show($id, Request $request, PaginatorInterface $paginator){
 
         // on vérifie que les user est bien identifié 
 
@@ -242,7 +243,15 @@ class FigureController extends AbstractController
 
          $repo = $this->getDoctrine()->getRepository(Forum::class);
 
-        $forum = $repo->findBy(['figureId' => $id ], ['createdAt'=> 'DESC'])->getRes;
+        $forum = $repo->findBy(['figureId' => $id ], ['createdAt'=> 'DESC']);
+
+        $forums = $paginator->paginate(
+            $forum, // Requête contenant les données à paginer (ici nos articles)
+            $request->query->getInt('page', 1), // Numéro de la page en cours, passé dans l'URL, 1 si aucune page
+            10 // Nombre de résultats par page
+        );
+
+        
 
 
         
@@ -275,7 +284,7 @@ class FigureController extends AbstractController
 
         return $this->render('figure/show.html.twig',[
             'figure' => $figure,
-            'comment' => $forum,
+            'comment' => $forums,
            'CommentType' => $form->createView(),
         ] );
     }
@@ -331,6 +340,21 @@ class FigureController extends AbstractController
         return $this->redirectToRoute('figure_list');
     }
 
+
+    /**
+     * @Route("/contact", name="app_contact")
+     */
+
+     // je veux afficher tte les figure et faire un loop sur le front end
+     public function contact()
+     {
+ 
+        
+ 
+         return $this->render('contact.html.twig', [
+             'controller_name' => 'FigureController',
+         ]);
+     }
     
 
 

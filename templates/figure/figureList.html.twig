@@ -2,53 +2,65 @@
 
 {% block body %}
 
-<h1 class="d-flex justify-content-end"> Listes des figures </h1>
+<h1 class="center-align"> Listes des figures </h1>
 
-
-
+<div class="container">
 
 <section class="figure">
-<div class="row">
-   
-        {% for figure in figures %}
-         <div class="col s5 m4">
-  <div class="card">
-    <div class="card-image waves-effect waves-block waves-light">
-    
-        <img class="activator" src="./assets/images/{{ figure.LienPhoto }}"  alt="photo de la figure" width=150px height=150px >
-              
+  <div class="row">
+
+    {% for figure in figures %}
+    <div class="col s5 m4">
+      <div class="card">
+        <div class="card-image waves-effect waves-block waves-light">
+
+          <img class="activator" src="./assets/images/{{ figure.LienPhoto }}" alt="photo de la figure" width=150px
+            height=150px>
+
+
+        </div>
+        <div class="card-content">
+          <span class="card-title activator grey-text text-darken-4">{{ figure.nom }}<i
+              class="material-icons right"></i></span>
+          <p>{{ figure.GroupeFigure }}</p>
+          <p>{{ figure.description }}</p>
+
+        </div>
+        <div class="card-action">
+          <a href="{{path('figure_delete', {'id':figure.id}) }}"><span class="material-icons">
+              delete
+            </span></a>
+          <a href="{{path('figure_edit', {'id':figure.id}) }}"><span class="material-icons">
+              create
+            </span></a>
+          <a href="{{path('figure_show', {'id':figure.id}) }}"><span class="material-icons">
+              visibility
+            </span></a>
+        </div>
+        <div class="card-reveal">
+          <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
+
+        <iframe width="200" height="200"  src="{{ figure.lienVideo }}"></iframe>
+        <a href="{{ figure.lienVideo }}">Votre vidéo</a>
+           
+
+        </div>
+      </div>
+    </div>
+
+
+    {% endfor %}
+  </div>
 
     </div>
-    <div class="card-content">
-      <span class="card-title activator grey-text text-darken-4">{{ figure.nom }}<i class="material-icons right"></i></span>
-      <p>{{ figure.GroupeFigure }}</p>
-      <p>{{ figure.description }}</p>
-      
-       </div>
-       <div class="card-action">
-         <a href="{{path('figure_delete', {'id':figure.id}) }}"><span class="material-icons">
-             delete
-           </span></a>
-         <a href="{{path('figure_edit', {'id':figure.id}) }}"><span class="material-icons">
-             create
-           </span></a>
-         <a href="{{path('figure_show', {'id':figure.id}) }}"><span class="material-icons">
-             visibility
-           </span></a>
-       </div>
-       <div class="card-reveal">
-         <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
 
-         <p>{{ figure.lienVideo }}</p>
-       </div>
-       </div>
-       </div>
+</section>
 
 
-       {% endfor %}
-       </div>
+    </div>
 
-       </section>
+  
+
 
 
        {% endblock %}

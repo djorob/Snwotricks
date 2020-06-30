@@ -6,15 +6,16 @@
 
   <h2>{{figure.Nom}}</h2>
   <div class="row">
-    <div class="col s12 m7">
+    <div class="col s5 m6">
       <div class="card">
         <div class="card-image">
-          <img src="images/sample-1.jpg">
-          <span class="card-title">Card Title</span>
+         
         </div>
         <div class="card-content">
-          <img src="{{figure.LienPhoto}}">
-          {{figure.Description | raw}}
+          <img src="/assets/images/{{ figure.LienPhoto }}" width=350px
+            height=150px>
+         <p>{{ figure.description }}</p>
+           
         </div>
         <div class="card-action">
 
@@ -57,25 +58,13 @@
 
   {% endfor %}
 
-  <div> <a href="{{path('forum', {'id':4}) }}"><span class="material-icons">
-      first_page
-    </span></a>
-
-    <div> <a href="{{path('forum', {'id':4}) }}"><span class="material-icons">
-        last_page
-      </span></a>
-      </div>
-  </div>
- <span class="material-icons">
-             visibility
-           </span></a>
-
+  {{ knp_pagination_render(comment) }}
 
 
   <!--ici on affichera le formulaire pour creer un commetnaires-->
 
  
-{{ form(CommentType) }}
+ {{ form(CommentType) }}
 
 
 

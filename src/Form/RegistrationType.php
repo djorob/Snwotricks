@@ -26,6 +26,8 @@ class RegistrationType extends AbstractType
                 'attr' => array(
                     'placeholder' => 'uploader votre photo',
                     'required'=> 'false',
+                    'style' => 'margin-top:1em; margin-bottom:1em;', 
+                    'class'=>'btn btn-small waves-effect waves-light'
                    
                 )
                 
