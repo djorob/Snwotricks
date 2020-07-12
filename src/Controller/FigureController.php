@@ -345,7 +345,7 @@ class FigureController extends AbstractController
      * @Route("/contact", name="app_contact")
      */
 
-     // je veux afficher tte les figure et faire un loop sur le front end
+     
      public function contact()
      {
  
@@ -356,6 +356,18 @@ class FigureController extends AbstractController
          ]);
      }
     
+
+    /**
+     * @Route("/about", name="app_about", methods={"GET"})
+     */ 
+     
+     public function about()
+
+     {     
+         return $this->render('about.html.twig', [
+             
+         ]);
+     }
 
 
    

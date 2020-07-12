@@ -26,15 +26,18 @@
 
         </div>
         <div class="card-action">
-          
+
         </div>
         <div class="card-reveal">
           <span class="card-title grey-text text-darken-4">Card Title<i class="material-icons right">close</i></span>
-
-          <p>{{ figure.lienVideo }}</p>
-        </div>
+          <div class="video-container">
+        <iframe width="853" height="480" src="{{ figure.lienVideo }}" frameborder="0" allowfullscreen></iframe>
+           <a href="{{ figure.lienVideo }}">Votre vidéo</a>
       </div>
-    </div>
+
+        </div>
+        </div>
+        </div>
 
 
     {% endfor %}

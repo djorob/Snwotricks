@@ -20,7 +20,9 @@ class CommentType extends AbstractType
             ->add('content',TextareaType::class,array(
                 'label' => 'contenu ',
                 'attr' => array(
-                    'placeholder' => 'votre contenu'
+                    'placeholder' => 'votre contenu',
+                    'style' => 'margin-top:1em; margin-bottom:1em;',
+                    'style' => 'margin-left:2em; margin-right:2em', 
                     
                 )
            ))
